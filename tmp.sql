@@ -8,7 +8,7 @@ CREATE TABLE Utente (
 	cognome varchar (50),
 	stato char (2),
 	password varchar (30) not null,
-	nickname varchar (20) not null,
+	nickname varchar (20) not null unique,
 	followers int,
 	following int
 );
@@ -20,7 +20,7 @@ CREATE TABLE Artista (
 	stato char (2),
 	password varchar (30) not null,
 	followers int,
-	nome_artista varchar (30) unique,
+	nome_artista varchar (30) not null unique,
 	info varchar (200),
 	label varchar (20),
 	ascolti_mensili int
