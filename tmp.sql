@@ -1,6 +1,6 @@
---table utente
 DROP TABLE IF EXISTS Utente CASCADE;
 DROP TABLE IF EXISTS Artista CASCADE;
+DROP TABLE IF EXISTS Podcaster CASCADE;
 
 CREATE TABLE Utente (
 	mail varchar (50) primary key,
@@ -24,6 +24,17 @@ CREATE TABLE Artista (
 	info varchar (200),
 	label varchar (20),
 	ascolti_mensili int
+);
+
+CREATE TABLE Podcaster (
+	mail VARCHAR(50) primary key,
+	nome VARCHAR(50),
+	cognome VARCHAR(50),
+	stato VARCHAR(50),
+	password VARCHAR(50) not null unique,
+	followers INT,
+	nome_podcaster VARCHAR(30),
+	info VARCHAR(200)
 );
 
 INSERT INTO Utente (mail, nome, cognome, stato, password, nickname, followers, following) values 
@@ -179,3 +190,55 @@ INSERT INTO Artista (mail, nome, cognome, stato, password, followers, nome_artis
 	('nwace1b@yellowbook.com', 'Nike', 'Wace', 'UY', 'VkV4oTGInsv', 617529, 'Webex', 'Synchronised neutral protocol', 512, 694446),
 	('rhinckesman1c@360.cn', 'Renaud', 'Hinckesman', 'CN', 'FvSTDTLdCa', 400151, 'Rhinckesmanc', 'Persevering non-volatile function', 319, 347452),
 	('pbungey1d@arizona.edu', 'Pail', 'Bungey', 'CN', 'DZbPes2', 716517, 'Bungeyd', 'Customizable scalable attitude', 227, 980058);
+
+	INSERT INTO Podcaster (mail, nome, cognome, stato, password, followers, nome_podcaster, info) VALUES
+	('nbole0@yale.edu', 'Nicola', 'Bole', 'US', 'utvlK0HchO', 146, 'Nbole', 'User-friendly incremental approach'),
+	('dmilvarnie1@desdev.cn', 'Dame', 'Milvarnie', 'SE', 'Px7uYlALwFb', 448, 'Dmilvarnie', 'Ergonomic discrete policy'),
+	('lisaak2@cnet.com', 'Lenard', 'Isaak', 'PS', 'cI7mQR0Jw', 282, 'Lisaak', 'Synergistic bifurcated paradigm'),
+	('cyate3@uol.com.br', 'Cecelia', 'Yate', 'GR', 'mX9kAwu', 662, 'Cyate', 'Ergonomic next generation emulation'),
+	('dhendren4@utexas.edu', 'Dionne', 'Hendren', 'PL', 'fdyA0aSrtcvz', 361, 'Dhendren', 'Stand-alone cohesive throughput'),
+	('mroelofs5@acquirethisname.com', 'Matti', 'Roelofs', 'AM', 'WnHGtT7BzcD', 979, 'Mroelofs', 'Organic intangible migration'),
+	('mcallen6@taobao.com', 'Mireielle', 'Callen', 'CA', 'iiosVtsyUrA', 694, 'Mcallen', 'Innovative bandwidth-monitored middleware'),
+	('glehrmann7@xinhuanet.com', 'Gibbie', 'Lehrmann', 'CN', 'bJGAk5', 159, 'Glehrmann', 'Phased multi-tasking circuit'),
+	('xseage8@ibm.com', 'Ximenes', 'Seage', 'NG', '6jYi50ML63C', 786, 'Xseage', 'Re-engineered high-level projection'),
+	('mscanderet9@google.pl', 'Marjie', 'Scanderet', 'ID', 'pDUR2lNq8', 800, 'Mscanderet', 'Multi-lateral motivating analyzer'),
+	('dconkiea@digg.com', 'Dmitri', 'Conkie', 'SE', 'oucyLtD', 61, 'Dconkie', 'Synchronised real-time architecture'),
+	('zfluryb@yellowbook.com', 'Zahara', 'Flury', 'BR', 'sCCtyxY3lPN4', 983, 'Zflury', 'De-engineered analyzing intranet'),
+	('dsandsallanc@diigo.com', 'Donetta', 'Sands-Allan', 'CN', 'onGVOV08OkN6', 662, 'Dsandsallan', 'Mandatory hybrid frame'),
+	('robradaned@va.gov', 'Reggis', 'O''Bradane', 'PA', 'yhvtGFiX2RAj', 330, 'Robradane', 'Persevering analyzing access'),
+	('mmaywarde@prweb.com', 'Margot', 'Mayward', 'MG', '0OuK2g', 709, 'Mmayward', 'Cross-group impactful Graphic Interface'),
+	('jsmalef@devhub.com', 'Jeanelle', 'Smale', 'JO', 'lXJWni73a0TU', 628, 'Jsmale', 'User-friendly interactive challenge'),
+	('kbugsg@nature.com', 'Kean', 'Bugs', 'PT', 'DMfiUFrEe1c', 16, 'Kbugs', 'Grass-roots composite software'),
+	('kgauchh@paypal.com', 'Kailey', 'Gauch', 'CN', 'Sk03RcV1l', 385, 'Kgauch', 'Networked radical capacity'),
+	('csillitoi@acquirethisname.com', 'Cristi', 'Sillito', 'JP', 'BhQEYTMaiMA', 786, 'Csillito', 'Visionary empowering support'),
+	('grougheyj@photobucket.com', 'Granger', 'Roughey', 'PH', 'N0YQ34zutJJl', 285, 'Groughey', 'Team-oriented dedicated superstructure'),
+	('mcristofarik@123-reg.co.uk', 'Maure', 'Cristofari', 'CN', 'MuzeUf', 689, 'Mcristofari', 'Customer-focused intermediate Graphic Interface'),
+	('achalcraftl@washington.edu', 'Alika', 'Chalcraft', 'RU', 'tdu9yOwu', 406, 'Achalcraft', 'Enhanced hybrid complexity'),
+	('snottlem@marriott.com', 'Swen', 'Nottle', 'RS', '5yaoCT8Rd2', 511, 'Snottle', 'Object-based eco-centric instruction set'),
+	('bjolln@sun.com', 'Bartholemy', 'Joll', 'GR', 'SiLKigadJ4og', 238, 'Bjoll', 'Organic systematic paradigm'),
+	('astiegaro@google.ru', 'Aveline', 'Stiegar', 'LU', 'G0qabT', 445, 'Astiegar', 'Open-architected actuating middleware'),
+	('fpiffp@ebay.co.uk', 'Fowler', 'Piff', 'CZ', 'YNVjvN9aWs', 938, 'Fpiff', 'Streamlined full-range intranet'),
+	('mjeremaesq@nytimes.com', 'Matthieu', 'Jeremaes', 'CA', 'RKCGB31SWC6', 830, 'Mjeremaes', 'Exclusive actuating database'),
+	('rschoberr@51.la', 'Rourke', 'Schober', 'CN', 'dPRjT0oKNjA', 325, 'Rschober', 'Synchronised homogeneous policy'),
+	('ewhates@noaa.gov', 'Elisabeth', 'Whate', 'JP', 'IqqxYVrhrY6', 834, 'Ewhate', 'Virtual hybrid instruction set'),
+	('fchint@1und1.de', 'Fons', 'Chin', 'ID', 'kyft286', 717, 'Fchin', 'Re-contextualized 5th generation utilisation'),
+	('wsidnellu@hp.com', 'Wat', 'Sidnell', 'JP', 'HvXrkTY5', 19, 'Wsidnell', 'Multi-tiered incremental monitoring'),
+	('bmurkusv@hostgator.com', 'Brynn', 'Murkus', 'PT', 'uQy1Mr2', 147, 'Bmurkus', 'De-engineered fault-tolerant internet solution'),
+	('kmcilwainew@lulu.com', 'Kim', 'McIlwaine', 'CN', '4BXi4lVz0', 849, 'Kmcilwaine', 'Horizontal zero administration paradigm'),
+	('alissendenx@over-blog.com', 'Andris', 'Lissenden', 'BY', 'uznXmLFq', 53, 'Alissenden', 'Polarised intermediate workforce'),
+	('chardeyy@earthlink.net', 'Charisse', 'Hardey', 'CM', 'bggizTDkrCYs', 746, 'Chardey', 'Sharable upward-trending help-desk'),
+	('asleneyz@wordpress.com', 'Ailyn', 'Sleney', 'PK', '96MFvnM7Pf', 593, 'Asleney', 'Implemented scalable customer loyalty'),
+	('eashmore10@arizona.edu', 'Ewen', 'Ashmore', 'AR', '44rxuT6dB', 633, 'Eashmore', 'Down-sized methodical synergy'),
+	('uhulburt11@qq.com', 'Urson', 'Hulburt', 'MX', '12JhCBXxXk', 365, 'Uhulburt', 'Enhanced systematic capacity'),
+	('scovil12@pen.io', 'Sayre', 'Covil', 'BG', 'EuMBlIae', 338, 'Scovil', 'Face to face holistic orchestration'),
+	('asalvadori13@princeton.edu', 'Ann', 'Salvadori', 'ID', 'JGEkBrg9dkC', 87, 'Asalvadori', 'Distributed analyzing concept'),
+	('crickersy14@printfriendly.com', 'Cassandre', 'Rickersy', 'PK', 'JUTwnN3u5Cv', 270, 'Crickersy', 'Stand-alone even-keeled circuit'),
+	('kkimmons15@wikispaces.com', 'Karlene', 'Kimmons', 'MW', '2wtglObsOs0F', 313, 'Kkimmons', 'Sharable multi-state alliance'),
+	('scastellan16@google.fr', 'Sherlock', 'Castellan', 'MZ', 'X3VR7inpzVe', 271, 'Scastellan', 'Customizable fault-tolerant open system'),
+	('econnick17@simplemachines.org', 'Elane', 'Connick', 'RU', 'A3em8fq9chs', 732, 'Econnick', 'Programmable interactive task-force'),
+	('sdeinhardt18@goo.gl', 'Sybila', 'Deinhardt', 'VN', 'Z4c30UG', 1, 'Sdeinhardt', 'Realigned optimizing software'),
+	('ffairman19@tripod.com', 'Flora', 'Fairman', 'US', 'Z65qX9', 284, 'Ffairman', 'Advanced eco-centric neural-net'),
+	('olefeaver1a@wordpress.org', 'Orel', 'Lefeaver', 'AF', 'bjgrjurBiTr', 912, 'Olefeaver', 'Reactive hybrid strategy'),
+	('mdorrance1b@github.com', 'Monique', 'Dorrance', 'ID', 'tbVSoclw', 104, 'Mdorrance', 'Persistent asynchronous task-force'),
+	('nnisot1c@unblog.fr', 'Nichols', 'Nisot', 'ID', 'AIqqCe2e', 19, 'Nnisot', 'Assimilated hybrid local area network'),
+	('mscreas1d@dion.ne.jp', 'Marley', 'Screas', 'ID', '7JrRQn4lFCs', 648, 'Mscreas', 'Persistent eco-centric encoding');
