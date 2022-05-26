@@ -49,7 +49,7 @@ CREATE TABLE Album (
 CREATE TABLE Podcast (
 	nome_podcast VARCHAR(30),
 	podcaster VARCHAR(50),
-	descrizione VARCHAR(100),
+	info VARCHAR(100),
 	primary key (nome_podcast, podcaster),
 	FOREIGN KEY (podcaster) REFERENCES Podcaster(mail)
 );
