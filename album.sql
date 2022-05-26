@@ -4,7 +4,8 @@ CREATE TABLE Album (
 	titolo varchar (30),
 	artista varchar (50),
 	data_pubblicazione date,
-	primary key (titolo, artista)
+	primary key (titolo, artista),
+	FOREIGN KEY (artista) REFERENCES Artista(mail)
 );
 
 INSERT INTO Album (titolo, artista, data_pubblicazione) VALUES 
