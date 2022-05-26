@@ -472,7 +472,7 @@ INSERT INTO Album (titolo, artista, data_pubblicazione) VALUES
     ('justo', 'mdorrance1b@github.com', 'Grass-roots contextually-based hardware'),
     ('nascetur ridiculus mus', 'lisaak2@cnet.com', 'Quality-focused uniform knowledge base');
 
-	INSERT INTO Canzone (titolo, album, durata) VALUES 
+INSERT INTO Canzone (titolo, album, durata) VALUES 
     ('extra', 'sagittis nam congue', 130),
     ('non velit donec', 'sagittis nam congue', 298),
     ('consequat varius integer', 'sagittis nam congue', 273),
