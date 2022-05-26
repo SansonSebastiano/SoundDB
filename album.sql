@@ -1,12 +1,14 @@
 DROP TABLE IF EXISTS Album CASCADE;
 
 CREATE TABLE Album (
+	album_id SERIAL primary key,
 	titolo varchar (30),
 	artista varchar (50),
 	data_pubblicazione date,
-	primary key (titolo, artista),
 	FOREIGN KEY (artista) REFERENCES Artista(mail)
 );
+TRUNCATE ONLY Album
+RESTART IDENTITY;
 
 INSERT INTO Album (titolo, artista, data_pubblicazione) VALUES 
 	('sagittis nam congue', 'rwisdish0@newyorker.com', '2021/05/09'),
