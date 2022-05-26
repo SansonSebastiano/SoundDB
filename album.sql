@@ -33,7 +33,7 @@ INSERT INTO Album (titolo, artista, data_pubblicazione) VALUES
 	('purus sit', 'dfootf@feedburner.com', '2020/06/10'),
 	('lobortis', 'rlaffin3@samsung.com', '2020/01/06'),
 	('magna at', 'gbreckenridgex@shinystat.com', '2020/11/17'),
-	('magna', 'dfootf@feedburner.com', '2021/12/09'),
+	('extraordinary', 'dfootf@feedburner.com', '2021/12/09'),
 	('vulputate', 'gbreckenridgex@shinystat.com', '2022/01/27'),
 	('sed', 'cclubbe17@de.vu', '2021/08/05'),
 	('nisi at', 'agaspard15@bloglines.com', '2022/03/07'),
