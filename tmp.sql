@@ -13,6 +13,7 @@ DROP TABLE IF EXISTS categoria CASCADE;
 DROP TABLE IF EXISTS Carta_di_credito CASCADE;
 DROP TABLE IF EXISTS podcast_categoria CASCADE;
 DROP TABLE IF EXISTS dati_fatturazione CASCADE;
+DROP TABLE IF EXISTS Pagamento CASCADE;
 
 CREATE TABLE Utente (
 	mail varchar (50) primary key,
@@ -156,6 +157,15 @@ CREATE TABLE dati_fatturazione (
     carta_credito numeric(16,0) not null,
     FOREIGN KEY (utente) REFERENCES utente(mail),
     FOREIGN KEY (carta_credito) REFERENCES carta_di_credito(numero)
+);
+
+CREATE TABLE Pagamento (
+    transazione_id char (10) primary key,
+    fatturazione_id char (10) not null,
+    data_fattura date not null,
+    importo numeric (4, 2) not null,
+    FOREIGN key (fatturazione_id) REFERENCES Dati_fatturazione(fatturazione_id),
+    check(importo >= 0)
 );
 
 INSERT INTO Utente (mail, nome, cognome, stato, password, nickname, followers, following) values 
@@ -1573,7 +1583,7 @@ INSERT INTO Episodio (episodio_id, podcast, titolo, descrizione, durata, data_pu
 
 INSERT INTO Abbonamento (nome, costo_mensile, descrizione) values 
         ('FREE', 00.00, 'Abbonamento gratuito che permette unicamente la riproduzione di brani e podcast con interruzioni pubblicitarie'),
-        ('PREMIUM', 09.99, 'Abbonamento consente la riproduzione di contenuti senza alcuna interruzione pubblicitaria e a possibilità di creare playlist personalizzate'),
+        ('PREMIUM', 09.99, 'Abbonamento consente la riproduzione di contenuti senza alcuna interruzione pubblicitaria e a possibilità di creare playlist personalizzate');
 
 INSERT INTO Playlist (playlist_id, nome, descrizione, data_creazione, utente) VALUES 
     ('XnKB6kBrsk', 'pulvinar', 'Quisque erat eros, viverra eget, congue eget.', '2021/10/05', 'msier0@fotki.com'),
@@ -1940,3 +1950,25 @@ insert into dati_fatturazione (fatturazione_id, codice_fiscale, civico, via, cit
     ('8gDMXlB8Mg', 'EAUQOY58N41H220S', 957, 'Laurel Road', 'San Carlos', 11723, 'CO', 'mokelleheru@networkadvertising.org', '5575135060726930'),
     ('Ok6Bel5inG', 'YUTBPA64A33O853C', 903, 'Jenifer Road', 'Vårby', 12302, 'SE', 'lpinkettw@theglobeandmail.com', '5158437682994960'),
     ('KJmAsIQVKV', 'IJJMTG17W62B643C', 65, 'Beilfuss Center', 'Ōdachō-ōda', 21472, 'JP', 'lboughtflowerx@cdc.gov', '5108547787987692');
+
+INSERT INTO Pagamento (transazione_id, fatturazione_id, data_fattura, importo) VALUES 
+    ('OBHCstEka0', 'cfRIo0cBv5', '2021-07-17', 79.92),
+    ('spRrq6EQV5', '272OiurEd3', '2022-01-01', 00.00),
+    ('mleZBnHdlz', 'oszsXBdzGu', '2022-02-10', 00.00),
+    ('Yo9mRv4O2v', 'DClcfMQrQg', '2022-04-13', 19.98),
+    ('ZwFMqyoLUL', 'QYCuTXMXNX', '2022-01-03', 39.96),
+    ('AzFprKZKZu', 'th4I8COSie', '2022-03-01', 00.00),
+    ('Oz3L3yjU0D', 'k5bK4WrbwG', '2021-03-29', 19.98),
+    ('JrzUANq3Bb', 'GuHSFJXteo', '2021-10-29', 19.98),
+    ('vIUceUpt0X', '1KWTWFG1gC', '2021-06-06', 59.94),
+    ('iZeluk8TtA', 'DQGN0AEpPV', '2021-04-04', 59.94),
+    ('7wUrf05QwX', '94C9mO2l97', '2021-02-02', 69.93),
+    ('NDlNlMQtdR', 'ulOFZL3UWv', '2021-01-26', 79.92),
+    ('zjp79OPJo3', 'hd8T30SusI', '2021-04-21', 00.00),
+    ('iNdDOcHRA2', 'zO3kEGKlwQ', '2022-02-14', 00.00),
+    ('PaPdZ3fOc9', 'jIL7Hxfnb3', '2021-08-21', 00.00),
+    ('REcx7wvrvx', 'fQfhtEO6Cr', '2021-07-26', 19.98),
+    ('UKl9ca94Nb', 'wEtnD6lhmh', '2021-02-11', 59.94),
+    ('nRts8HbXWJ', '8gDMXlB8Mg', '2021-02-03', 00.00),
+    ('I5v1KMaWLf', 'Ok6Bel5inG', '2021-04-21', 00.00),
+    ('62xXDojX4R', 'KJmAsIQVKV', '2021-07-01', 00.00);
