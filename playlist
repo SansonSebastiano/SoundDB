@@ -6,6 +6,7 @@ CREATE TABLE Playlist (
 	descrizione varchar (250),
 	data_creazione date,
 	utente varchar (50),
+    check (Utente NOT IN (SELECT mail,))
 	FOREIGN KEY (utente) REFERENCES Utente(mail)
 );
 
