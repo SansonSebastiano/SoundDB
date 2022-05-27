@@ -1,10 +1,12 @@
 CREATE TABLE Podcast (
+    podcast_id SERIAL primary key,
 	nome_podcast VARCHAR(30),
 	podcaster VARCHAR(50),
-	descrizione VARCHAR(100),
-	primary key (nome_podcast, podcaster),
+	info VARCHAR(100),
 	FOREIGN KEY (podcaster) REFERENCES Podcaster(mail)
 );
+TRUNCATE ONLY Podcast
+RESTART IDENTITY;
 
 
 insert into Podcast (nome_podcast, podcaster, info) values 

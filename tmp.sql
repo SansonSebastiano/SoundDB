@@ -5,6 +5,7 @@ DROP TABLE IF EXISTS Album CASCADE;
 DROP TABLE IF EXISTS Podcast CASCADE;
 DROP TABLE IF EXISTS Canzone CASCADE;
 DROP TABLE IF EXISTS Episodio CASCADE;
+DROP TABLE IF EXISTS Abbonamento CASCADE;
 
 CREATE TABLE Utente (
 	mail varchar (50) primary key,
@@ -78,6 +79,12 @@ CREATE TABLE Episodio (
 	data_pubblicazione date,
 	primary key (episodio_id, podcast),
 	foreign key (podcast) references Podcast(podcast_id)
+);
+
+CREATE TABLE Abbonamento (
+    nome varchar(20) primary key check (nome in('FREE', 'PREMIUM', 'FAMILY')),
+    costo_mensile numeric (4, 2) check (costo_mensile >= 0),
+    descrizione varchar(200)
 );
 
 INSERT INTO Utente (mail, nome, cognome, stato, password, nickname, followers, following) values 
@@ -1492,3 +1499,8 @@ INSERT INTO Episodio (episodio_id, podcast, titolo, descrizione, durata, data_pu
     (498, 2, 'mi sit amet', 'tortor id nulla ultrices aliquet maecenas leo odio condimentum id luctus nec molestie sed justo pellentesque viverra pede ac diam cras pellentesque volutpat dui', 6632, '2021-10-29'),
     (499, 99, 'pretium', 'penatibus et magnis dis parturient montes nascetur ridiculus mus etiam vel augue vestibulum rutrum rutrum neque aenean auctor', 807, '2022-05-09'),
     (500, 25, 'amet nunc viverra', 'semper rutrum nulla nunc purus phasellus in felis donec semper sapien a libero nam', 6437, '2021-11-27');
+
+    INSERT INTO Abbonamento (nome, costo_mensile, descrizione) values 
+        ('FREE', 00.00, 'Abbonamento gratuito che permette unicamente la riproduzione di brani e podcast con interruzioni pubblicitarie'),
+        ('PREMIUM', 09.99, 'Abbonamento consente la riproduzione di contenuti senza alcuna interruzione pubblicitaria e a possibilità di creare playlist personalizzate'),
+        ('FAMILY', 14.99, 'Stessi benefici dell’abbonamento PREMIUM, ma con la possibilità di dividere il costo fino ad un massimo di 4 utenti distinti, ad un prezzo mensile maggiorato');
