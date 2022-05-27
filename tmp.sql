@@ -9,6 +9,7 @@ DROP TABLE IF EXISTS Abbonamento CASCADE;
 DROP TABLE IF EXISTS Playlist CASCADE;
 DROP TABLE IF EXISTS Contenuto_playlist CASCADE;
 DROP TABLE IF EXISTS piano CASCADE;
+DROP TABLE IF EXISTS categoria CASCADE;
 
 CREATE TABLE Utente (
 	mail varchar (50) primary key,
@@ -117,6 +118,11 @@ CREATE TABLE piano (
     primary key (piano_id, utente),
     foreign key (utente) references utente(mail),
     foreign key (abbonamento) references abbonamento(nome)
+);
+
+CREATE TABLE categoria (
+    nome varchar (30) primary key,
+    descrizione varchar(100)
 );
 
 INSERT INTO Utente (mail, nome, cognome, stato, password, nickname, followers, following) values 
@@ -1722,3 +1728,16 @@ INSERT INTO piano (piano_id, utente, inizio_piano, fine_piano, abbonamento) valu
     ('aEV8spcirL', 'jcockings2i@sun.com', '2021-10-04', '2022-03-29', 'FREE'),
     ('tWVA3Mh5Xg', 'cpickersgill2n@oaic.gov.au', '2022-05-26', '2022-07-15', 'FREE'),
     ('tWVAfMh5Xg', 'dcolclough2r@issuu.com', '2021-09-28', '2021-11-29', 'FREE');
+
+    INSERT INTO categoria values
+    ('Drama', 'Cross-platform web-enabled projection'),
+    ('Comedy', 'Vision-oriented homogeneous open system'),
+    ('Sci-Fi', 'Grass-roots multi-state access'),
+    ('Horror', 'Expanded foreground open system'),
+    ('Romance', 'Function-based background framework'),
+    ('Documentary', 'Virtual heuristic open architecture'),
+    ('Thriller', 'Triple-buffered object-oriented firmware'),
+    ('Crime', 'Persistent next generation access'),
+    ('Animation', 'Balanced well-modulated attitude'),
+    ('Action', 'Seamless zero administration model'),
+    ('Fantasy', 'Multi-channelled client-server concept');
