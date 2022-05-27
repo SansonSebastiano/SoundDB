@@ -6,6 +6,7 @@ DROP TABLE IF EXISTS Podcast CASCADE;
 DROP TABLE IF EXISTS Canzone CASCADE;
 DROP TABLE IF EXISTS Episodio CASCADE;
 DROP TABLE IF EXISTS Abbonamento CASCADE;
+DROP TABLE IF EXISTS Playlist CASCADE;
 
 CREATE TABLE Utente (
 	mail varchar (50) primary key,
@@ -85,6 +86,15 @@ CREATE TABLE Abbonamento (
     nome varchar(20) primary key check (nome in('FREE', 'PREMIUM', 'FAMILY')),
     costo_mensile numeric (4, 2) check (costo_mensile >= 0),
     descrizione varchar(200)
+);
+
+CREATE TABLE Playlist (
+	playlist_id char (10) primary key,
+	nome varchar (30),
+	descrizione varchar (250),
+	data_creazione date,
+	utente varchar (50),
+	FOREIGN KEY (utente) REFERENCES Utente(mail)
 );
 
 INSERT INTO Utente (mail, nome, cognome, stato, password, nickname, followers, following) values 
@@ -1500,7 +1510,79 @@ INSERT INTO Episodio (episodio_id, podcast, titolo, descrizione, durata, data_pu
     (499, 99, 'pretium', 'penatibus et magnis dis parturient montes nascetur ridiculus mus etiam vel augue vestibulum rutrum rutrum neque aenean auctor', 807, '2022-05-09'),
     (500, 25, 'amet nunc viverra', 'semper rutrum nulla nunc purus phasellus in felis donec semper sapien a libero nam', 6437, '2021-11-27');
 
-    INSERT INTO Abbonamento (nome, costo_mensile, descrizione) values 
+INSERT INTO Abbonamento (nome, costo_mensile, descrizione) values 
         ('FREE', 00.00, 'Abbonamento gratuito che permette unicamente la riproduzione di brani e podcast con interruzioni pubblicitarie'),
         ('PREMIUM', 09.99, 'Abbonamento consente la riproduzione di contenuti senza alcuna interruzione pubblicitaria e a possibilità di creare playlist personalizzate'),
         ('FAMILY', 14.99, 'Stessi benefici dell’abbonamento PREMIUM, ma con la possibilità di dividere il costo fino ad un massimo di 4 utenti distinti, ad un prezzo mensile maggiorato');
+
+INSERT INTO Playlist (playlist_id, nome, descrizione, data_creazione, utente) VALUES 
+    ('XnKB6kBrsk', 'pulvinar', 'Quisque erat eros, viverra eget, congue eget.', '2021/10/05', 'msier0@fotki.com'),
+    ('CHgTNybOOK', 'turpis', 'In blandit ultrices enim.', '2021/06/09', 'aabbie1@goodreads.com'),
+    ('pL5YO4V8cg', 'luctus', 'Quisque arcu libero, rutrum ac, lobortis vel, dapibus at, diam.', '2020/04/22', 'aabbie1@goodreads.com'),
+    ('cea8RZosmz', 'at ipsum', 'Duis bibendum.', '2021/07/21', 'dscholfield2@opera.com'),
+    ('rmj1faqoXl', 'ullamcorper', 'Nam tristique tortor eu pede.', '2020/05/17', 'dscholfield2@opera.com'),
+    ('0fPsSWTnz4', 'sapien ut', 'Curabitur convallis.', '2021/04/21', 'dscholfield2@opera.com'),
+    ('nOg4iT34TL', 'pulvinar sed', 'Donec ut mauris eget massa tempor convallis.', '2020/01/13', 'msier0@fotki.com'),
+    ('wIMkXD9AAz', 'pellentesque viverra pede', 'Donec odio justo, sollicitudin ut, suscipit a, feugiat et, eros.', '2021/09/27', 'kmalyj4@adobe.com'),
+    ('avhrB429Mr', 'lacus', 'Mauris enim leo, rhoncus sed, vestibulum sit amet, cursus id, turpis.', '2022/04/07', 'kmalyj4@adobe.com'),
+    ('27YKVtYhpn', 'rutrum neque', 'Duis at velit eu est congue elementum.', '2020/01/05', 'tluetkemeyer5@discuz.net'),
+    ('oCSHyvTtRP', 'suscipit a', 'Suspendisse ornare consequat lectus.', '2022/04/28', 'ydorton6@disqus.com'),
+    ('gIVfB3wkgn', 'aliquet massa', 'Vivamus tortor.', '2022/01/23', 'ydorton6@disqus.com'),
+    ('UbiiTIyTJS', 'platea dictumst', 'Cras mi pede, malesuada in, imperdiet et, commodo vulputate, justo.', '2020/07/23', 'ydorton6@disqus.com'),
+    ('49ILNbEFEH', 'non mi', 'Integer a nibh.', '2021/11/09', 'ydorton6@disqus.com'),
+    ('GhL2Kx4yti', 'nonummy', 'Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae, Mauris viverra diam vitae quam.', '2021/08/25', 'jgaythwaite7@whitehouse.gov'),
+    ('oGjoGgRa2U', 'a suscipit nulla', 'Suspendisse potenti.', '2020/04/16', 'jgaythwaite7@whitehouse.gov'),
+    ('1jGL0GxHvJ', 'accumsan', 'Proin interdum mauris non ligula pellentesque ultrices.', '2021/05/03', 'jgaythwaite7@whitehouse.gov'),
+    ('jQ5z5X1KRK', 'justo sollicitudin', 'Aenean lectus.', '2021/07/18', 'ksecret8@t-online.de'),
+    ('tjbKWeNEnh', 'non interdum', 'Vivamus vestibulum sagittis sapien.', '2021/08/08', 'ksecret8@t-online.de'),
+    ('H51uTmLAjc', 'ante', 'Donec ut dolor.', '2021/07/22', 'ksecret8@t-online.de'),
+    ('pkf6XXRPrZ', 'donec posuere', 'Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae, Donec pharetra, magna vestibulum aliquet ultrices, erat tortor sollicitudin mi, sit amet lobortis sapien sapien non mi.', '2021/06/06', 'grosenhaupta@jalbum.net'),
+    ('lT1HMciH1s', 'aliquam augue quam', 'Proin eu mi.', '2020/11/07', 'grosenhaupta@jalbum.net'),
+    ('ffjvxGTJea', 'sed', 'Donec posuere metus vitae ipsum.', '2020/09/07', 'grosenhaupta@jalbum.net'),
+    ('TLDA9noEnV', 'in', 'Proin leo odio, porttitor id, consequat in, consequat ut, nulla.', '2020/05/17', 'jcriminb@economist.com'),
+    ('L7oMylhvt5', 'ipsum primis in', 'Suspendisse ornare consequat lectus.', '2021/05/12', 'jcriminb@economist.com'),
+    ('WUpt7iSDqk', 'congue risus', 'Nunc purus.', '2021/02/01', 'jcriminb@economist.com'),
+    ('bBr1c4pLUr', 'vitae', 'Aenean auctor gravida sem.', '2021/11/02', 'afoxallf@twitter.com'),
+    ('CFRvgVbXQC', 'vulputate ut', 'Quisque erat eros, viverra eget, congue eget, semper rutrum, nulla.', '2021/08/08', 'escoblei@weebly.com'),
+    ('Ye8gy73zSG', 'integer', 'Integer aliquet, massa id lobortis convallis, tortor risus dapibus augue, vel accumsan tellus nisi eu orci.', '2021/10/30', 'escoblei@weebly.com'),
+    ('oUslqiv5JK', 'dictumst', 'Nunc rhoncus dui vel sem.', '2022/05/06', 'escoblei@weebly.com'),
+    ('bSRc2G50ly', 'volutpat', 'Sed vel enim sit amet nunc viverra dapibus.', '2020/08/31', 'wmalyk@hubpages.com'),
+    ('lLSiGiQ5RN', 'massa id nisl', 'In blandit ultrices enim.', '2020/01/15', 'wmalyk@hubpages.com'),
+    ('grPoBXOQfs', 'justo eu massa', 'Pellentesque viverra pede ac diam.', '2020/04/16', 'wmalyk@hubpages.com'),
+    ('TJVZuiewTM', 'eros viverra eget', 'In blandit ultrices enim.', '2021/01/02', 'wmalyk@hubpages.com'),
+    ('Y4xjmmH3pq', 'nonummy maecenas', 'Duis mattis egestas metus.', '2021/03/17', 'bwhitmarsho@reference.com'),
+    ('ilD3BQcbcI', 'interdum mauris', 'Pellentesque at nulla.', '2022/02/02', 'bwhitmarsho@reference.com'),
+    ('GDTVm4TnPE', 'justo pellentesque viverra', 'Curabitur gravida nisi at nibh.', '2021/08/14', 'zjeppsq@elegantthemes.com'),
+    ('tsq9va8vTL', 'sed', 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit.', '2020/11/24', 'zjeppsq@elegantthemes.com'),
+    ('QpEMspVFd0', 'aliquam', 'Morbi quis tortor id nulla ultrices aliquet.', '2022/02/17', 'zjeppsq@elegantthemes.com'),
+    ('PxgEBVMfYo', 'condimentum', 'Etiam pretium iaculis justo.', '2020/09/29', 'zjeppsq@elegantthemes.com'),
+    ('PEFti3Js7P', 'sit', 'Suspendisse potenti.', '2021/09/11', 'lwellerv@huffingtonpost.com'),
+    ('U4gh1GrF7A', 'potenti cras in', 'Phasellus in felis.', '2021/04/08', 'lwellerv@huffingtonpost.com'),
+    ('OWlFamzfnQ', 'luctus ultricies', 'Cras non velit nec nisi vulputate nonummy.', '2020/11/27', 'lwellerv@huffingtonpost.com'),
+    ('x1dnf1bJMT', 'molestie', 'Integer aliquet, massa id lobortis convallis, tortor risus dapibus augue, vel accumsan tellus nisi eu orci.', '2021/12/10', 'lwellerv@huffingtonpost.com'),
+    ('1Y9aUjyIi0', 'dapibus nulla suscipit', 'Nam congue, risus semper porta volutpat, quam pede lobortis ligula, sit amet eleifend pede libero quis orci.', '2020/06/12', 'lwellerv@huffingtonpost.com'),
+    ('i83Bq7Itkc', 'nam', 'Phasellus sit amet erat.', '2020/12/15', 'sblamphin13@yahoo.co.jp'),
+    ('jzBSEw4Obc', 'vel', 'Aenean auctor gravida sem.', '2020/02/01', 'sduns16@google.com.br'),
+    ('U4lZQOExvA', 'ipsum', 'Nulla nisl.', '2022/05/11', 'blandon18@soup.io'),
+    ('JVg8m5VGbB', 'vestibulum ante', 'Integer aliquet, massa id lobortis convallis, tortor risus dapibus augue, vel accumsan tellus nisi eu orci.', '2020/12/26', 'dcooney1a@drupal.org'),
+    ('zvkURv5juX', 'hac habitasse platea', 'Aenean lectus.', '2022/05/24', 'lstothert1b@scientificamerican.com'),
+    ('TN2AVmXuEc', 'felis fusce posuere', 'Aenean auctor gravida sem.', '2020/12/04', 'charradence1c@friendfeed.com'),
+    ('oOggmQnAh6', 'lectus pellentesque at', 'Proin leo odio, porttitor id, consequat in, consequat ut, nulla.', '2022/02/23', 'ehuxley1d@icq.com'),
+    ('SjHKtzQ8W2', 'nunc commodo', 'Nulla tellus.', '2021/11/19', 'cdelleschi1e@nbcnews.com'),
+    ('CRdanqd2WZ', 'ipsum praesent', 'Nulla ut erat id mauris vulputate elementum.', '2020/01/15', 'cdelleschi1e@nbcnews.com'),
+    ('BSinVO8hIM', 'justo in hac', 'Sed ante.', '2020/07/25', 'brawne1g@mozilla.org'),
+    ('UkeS7cOJro', 'ultrices', 'Praesent blandit.', '2020/04/06', 'brawne1g@mozilla.org'),
+    ('Ivcaf6wpxl', 'proin eu', 'In quis justo.', '2020/12/19', 'wbernucci1i@trellian.com'),
+    ('2k95JKPiCK', 'montes nascetur ridiculus', 'Fusce posuere felis sed lacus.', '2022/05/06', 'sbeltzner1j@chicagotribune.com'),
+    ('YiZ7uvHJHd', 'tempus', 'Aliquam non mauris.', '2020/09/21', 'abickerton1k@storify.com'),
+    ('UICvvB06Se', 'lorem integer tincidunt', 'Pellentesque at nulla.', '2020/03/16', 'adargie1l@g.co'),
+    ('PcYmLPIId7', 'interdum', 'Vestibulum ac est lacinia nisi venenatis tristique.', '2021/07/08', 'owhiffin1m@odnoklassniki.ru'),
+    ('Y4wc32EheC', 'sapien', 'Proin risus.', '2022/01/17', 'dobray1n@topsy.com'),
+    ('bbBPA4k3fP', 'suspendisse potenti in', 'Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae, Mauris viverra diam vitae quam.', '2020/08/04', 'amcgraffin1q@upenn.edu'),
+    ('QdS2bwl3vw', 'molestie', 'Cras pellentesque volutpat dui.', '2020/10/19', 'jchattoe1r@cdc.gov'),
+    ('uOjBlaz9Q0', 'consequat ut', 'Quisque erat eros, viverra eget, congue eget, semper rutrum, nulla.', '2021/06/18', 'jchattoe1r@cdc.gov'),
+    ('ualVLlVs8Z', 'lobortis vel', 'Maecenas tristique, est et tempus semper, est quam pharetra magna, ac consequat metus sapien ut nunc.', '2021/01/03', 'mlorens1u@pen.io'),
+    ('8SKwFiGlqu', 'placerat ante nulla', 'Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.', '2020/02/13', 'cianetti1v@yandex.ru'),
+    ('TMhA4mZevj', 'cubilia curae nulla', 'Nullam porttitor lacus at turpis.', '2022/03/01', 'cholde1w@wikipedia.org'),
+    ('QgWNeNwNZs', 'nunc', 'Pellentesque ultrices mattis odio.', '2021/01/22', 'fflewett1x@loc.gov'),
+    ('s7PhK2ya0E', 'in sapien iaculis', 'Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae, Duis faucibus accumsan odio.', '2020/05/10', 'sparade26@domainmarket.com');
