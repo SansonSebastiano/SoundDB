@@ -1954,6 +1954,7 @@ insert into dati_fatturazione (fatturazione_id, codice_fiscale, civico, via, cit
 INSERT INTO Pagamento (transazione_id, fatturazione_id, data_fattura, importo) VALUES 
     ('OBHCstEka0', 'cfRIo0cBv5', '2021-07-17', 79.92),
     ('spRrq6EQV5', '272OiurEd3', '2022-01-01', 00.00),
+    ('spRrq7EQV5', '272OiurEd3', '2022-03-11', 00.00),
     ('mleZBnHdlz', 'oszsXBdzGu', '2022-02-10', 00.00),
     ('Yo9mRv4O2v', 'DClcfMQrQg', '2022-04-13', 19.98),
     ('ZwFMqyoLUL', 'QYCuTXMXNX', '2022-01-03', 39.96),
@@ -1963,6 +1964,8 @@ INSERT INTO Pagamento (transazione_id, fatturazione_id, data_fattura, importo) V
     ('vIUceUpt0X', '1KWTWFG1gC', '2021-06-06', 59.94),
     ('iZeluk8TtA', 'DQGN0AEpPV', '2021-04-04', 59.94),
     ('7wUrf05QwX', '94C9mO2l97', '2021-02-02', 69.93),
+    ('7wUrf06QwX', '94C9mO2l97', '2021-09-02', 09.99),
+    ('7wUrf07QwX', '94C9mO2l97', '2021-10-02', 69.93),
     ('NDlNlMQtdR', 'ulOFZL3UWv', '2021-01-26', 79.92),
     ('zjp79OPJo3', 'hd8T30SusI', '2021-04-21', 00.00),
     ('iNdDOcHRA2', 'zO3kEGKlwQ', '2022-02-14', 00.00),
@@ -1972,3 +1975,46 @@ INSERT INTO Pagamento (transazione_id, fatturazione_id, data_fattura, importo) V
     ('nRts8HbXWJ', '8gDMXlB8Mg', '2021-02-03', 00.00),
     ('I5v1KMaWLf', 'Ok6Bel5inG', '2021-04-21', 00.00),
     ('62xXDojX4R', 'KJmAsIQVKV', '2021-07-01', 00.00);
+
+-- QUERY
+
+-- 1 : Contare quante canzoni appartenenti ad uno stesso artista compaiono almeno due volte nelle playlist
+    SELECT artista.nome_artista, count(canzone.titolo)
+    FROM Contenuto_playlist, canzone, album, artista
+    WHERE Contenuto_playlist.album = canzone.album
+    AND contenuto_playlist.titolo = canzone.titolo
+    AND canzone.album = album.album_id 
+    AND album.artista = artista.mail
+    GROUP BY artista.nome_artista
+    HAVING count(canzone.titolo) > 1
+
+-- 2 : Contare quanti album ha pubblicato un artista e mostrare il suo nome
+    SELECT artista.nome_artista, count(album.titolo) AS num_album
+    FROM album, artista
+    WHERE album.artista = artista.mail
+    GROUP BY artista.nome_artista
+	ORDER BY num_album ASC
+
+-- 3 : Mostrare il nome dell'album e dell'artista con il numero di canzoni in ordine decrescente
+    SELECT album.titolo, artista.nome_artista, count(canzone.titolo) AS num_canzoni
+    FROM album, artista, canzone
+    WHERE album.artista = artista.mail
+    AND album.album_id = canzone.album
+    GROUP BY album.titolo, artista.nome_artista
+    ORDER BY num_canzoni DESC
+
+-- 4 : Mostrare il nome del podcaster e del suo podcast con il numero di episodi in ordine decrescente
+    SELECT podcaster.nome, podcast.titolo, count(episodio.titolo) AS num_episodi
+    FROM podcaster, podcast, episodio
+    WHERE podcaster.mail = podcast.podcaster
+    AND podcast.podcast_id = episodio.podcast
+    GROUP BY podcaster.nome, podcast.titolo
+    ORDER BY num_episodi DESC 
+
+-- 5 : Mostrare il nickname dell'utente e contare il numero di pagamenti effettuati
+    SELECT utente.nickname, count(pagamento.transazione_id) AS num_pagamenti
+    FROM utente, pagamento, dati_fatturazione
+    WHERE utente.mail = dati_fatturazione.Utente
+    AND dati_fatturazione.fatturazione_id = pagamento.fatturazione_id
+    GROUP BY utente.nickname
+    ORDER BY num_pagamenti DESC
