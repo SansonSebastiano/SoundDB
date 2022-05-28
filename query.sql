@@ -26,11 +26,11 @@
     ORDER BY num_canzoni DESC
 
 -- 4 : Mostrare il nome del podcaster e del suo podcast con il numero di episodi in ordine decrescente
-    SELECT podcaster.nome, podcast.titolo, count(episodio.titolo) AS num_episodi
+    SELECT podcaster.nome, podcast.nome_podcast, count(episodio.titolo) AS num_episodi
     FROM podcaster, podcast, episodio
     WHERE podcaster.mail = podcast.podcaster
     AND podcast.podcast_id = episodio.podcast
-    GROUP BY podcaster.nome, podcast.titolo
+    GROUP BY podcaster.nome, podcast.nome_podcast
     ORDER BY num_episodi DESC 
 
 -- 5 : Mostrare il nickname dell'utente e contare il numero di pagamenti effettuati
