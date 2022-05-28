@@ -3,13 +3,24 @@
 #include <fstream>
 #include "dependencies/include/libpq-fe.h"
 
-#define DB_HOST "127.0.0.1"
-#define DB_PORT 5432
-#define DB_NAME "streaming_platform"
-#define DB_USER "sebastianosanson"
-#define DB_PASS "admin"
 
 using namespace std;
+
+PGconn* connect(const char* host, const char* user, const char* db, const char* pass, const char* port) {
+    char conninfo[256];
+    sprintf(conninfo, "user=%s password=%s dbname=\'%s\' hostaddr=%s port=%s",
+        user, pass, db, host, port);
+
+    PGconn* conn = PQconnectdb(conninfo);
+
+    if (PQstatus(conn) != CONNECTION_OK) {
+        std::cerr << "Cannot connect to the database" << endl << PQerrorMessage(conn);
+        PQfinish(conn);
+        exit(1);
+    }
+
+    return conn;
+}
 
 int menu() {
 	//system("clear");
@@ -97,11 +108,18 @@ void checkResults(PGresult *res, const PGconn *conn) {
 
 int main(int argc, char **argv) {
 
-    char conninfo[250];
-    sprintf(conninfo, "hostaddr=%s port=%d dbname=%s user=%s password=%s", DB_HOST, DB_PORT, DB_NAME, DB_USER, DB_PASS);
+    cout << "Database name: ";
+    char database_name[50];
+    cin >> database_name;
 
-    PGconn *conn;
-    conn = PQconnectdb(conninfo);
+    cout << "Username: ";
+    char username[50];
+    cin >> username;
+
+    cout << "Password: ";
+    char pass[50];
+    cin >> pass;
+    PGconn* conn = connect("127.0.0.1", username, database_name, pass, "5432");
 
     if (PQstatus(conn) != CONNECTION_OK) {
         fprintf(stderr, "Connection to database failed: %s\n", PQerrorMessage(conn));

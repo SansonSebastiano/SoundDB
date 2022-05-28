@@ -46,7 +46,7 @@ CREATE TABLE Podcaster (
 	stato VARCHAR(50),
 	password VARCHAR(50) not null unique,
 	followers INT,
-	nome_podcaster VARCHAR(30),
+	nome_podcaster VARCHAR(30) not null unique,
 	info VARCHAR(200)
 );
 
@@ -1986,14 +1986,14 @@ INSERT INTO Pagamento (transazione_id, fatturazione_id, data_fattura, importo) V
     AND canzone.album = album.album_id 
     AND album.artista = artista.mail
     GROUP BY artista.nome_artista
-    HAVING count(canzone.titolo) > 1
+    HAVING count(canzone.titolo) > 1;
 
 -- 2 : Contare quanti album ha pubblicato un artista e mostrare il suo nome
     SELECT artista.nome_artista, count(album.titolo) AS num_album
     FROM album, artista
     WHERE album.artista = artista.mail
     GROUP BY artista.nome_artista
-	ORDER BY num_album ASC
+	ORDER BY num_album ASC;
 
 -- 3 : Mostrare il nome dell'album e dell'artista con il numero di canzoni in ordine decrescente
     SELECT album.titolo, artista.nome_artista, count(canzone.titolo) AS num_canzoni
@@ -2001,7 +2001,7 @@ INSERT INTO Pagamento (transazione_id, fatturazione_id, data_fattura, importo) V
     WHERE album.artista = artista.mail
     AND album.album_id = canzone.album
     GROUP BY album.titolo, artista.nome_artista
-    ORDER BY num_canzoni DESC
+    ORDER BY num_canzoni DESC;
 
 -- 4 : Mostrare il nome del podcaster e del suo podcast con il numero di episodi in ordine decrescente
     SELECT podcaster.nome, podcast.nome_podcast, count(episodio.titolo) AS num_episodi
@@ -2009,7 +2009,7 @@ INSERT INTO Pagamento (transazione_id, fatturazione_id, data_fattura, importo) V
     WHERE podcaster.mail = podcast.podcaster
     AND podcast.podcast_id = episodio.podcast
     GROUP BY podcaster.nome, podcast.nome_podcast
-    ORDER BY num_episodi DESC 
+    ORDER BY num_episodi DESC;
 
 -- 5 : Mostrare il nickname dell'utente e contare il numero di pagamenti effettuati
     SELECT utente.nickname, count(pagamento.transazione_id) AS num_pagamenti
@@ -2017,7 +2017,7 @@ INSERT INTO Pagamento (transazione_id, fatturazione_id, data_fattura, importo) V
     WHERE utente.mail = dati_fatturazione.Utente
     AND dati_fatturazione.fatturazione_id = pagamento.fatturazione_id
     GROUP BY utente.nickname
-    ORDER BY num_pagamenti DESC
+    ORDER BY num_pagamenti DESC;
 
 -- indice : creare un indice per la tabella canzone
     CREATE INDEX canzone_indice ON canzone (titolo, album);
