@@ -17,8 +17,8 @@ DROP TABLE IF EXISTS Pagamento CASCADE;
 
 CREATE TABLE Utente (
 	mail varchar (50) primary key,
-	nome varchar (50),
-	cognome varchar (50),
+	nome varchar (50) not null,
+	cognome varchar (50) not null,
 	stato char (2),
 	password varchar (30) not null,
 	nickname varchar (20) not null unique,
@@ -28,8 +28,8 @@ CREATE TABLE Utente (
 
 CREATE TABLE Artista (
 	mail varchar (50) primary key,
-	nome varchar (50),
-	cognome varchar (50),
+	nome varchar (50) not null,
+	cognome varchar (50) not null,
 	stato char (2),
 	password varchar (30) not null,
 	followers int,
@@ -41,8 +41,8 @@ CREATE TABLE Artista (
 
 CREATE TABLE Podcaster (
 	mail VARCHAR(50) primary key,
-	nome VARCHAR(50),
-	cognome VARCHAR(50),
+	nome VARCHAR(50) not null,
+	cognome VARCHAR(50) not null,
 	stato VARCHAR(50),
 	password VARCHAR(50) not null unique,
 	followers INT,
@@ -52,9 +52,9 @@ CREATE TABLE Podcaster (
 
 CREATE TABLE Album (
 	album_id SERIAL primary key,
-	titolo varchar (30),
-	artista varchar (50),
-	data_pubblicazione date,
+	titolo varchar (30) not null,
+	artista varchar (50) not null,
+	data_pubblicazione date not null,
 	FOREIGN KEY (artista) REFERENCES Artista(mail)
 );
 TRUNCATE ONLY Album
@@ -62,8 +62,8 @@ RESTART IDENTITY;
 
 CREATE TABLE Podcast (
     podcast_id SERIAL primary key,
-	nome_podcast VARCHAR(30),
-	podcaster VARCHAR(50),
+	nome_podcast VARCHAR(30) not null,
+	podcaster VARCHAR(50) not null,
 	info VARCHAR(100),
 	FOREIGN KEY (podcaster) REFERENCES Podcaster(mail)
 );
@@ -73,7 +73,7 @@ RESTART IDENTITY;
 CREATE TABLE Canzone (
 	titolo varchar (30),
 	album int,
-	durata int,
+	durata int not null,
 	primary key (titolo, album),
     FOREIGN KEY (album) REFERENCES Album(album_id)
 );
@@ -81,10 +81,10 @@ CREATE TABLE Canzone (
 CREATE TABLE Episodio (
 	episodio_id int,
 	podcast int,
-	titolo VARCHAR(50),
+	titolo VARCHAR(50) not null,
 	descrizione VARCHAR(300),
-	durata int,
-	data_pubblicazione date,
+	durata int not null,
+	data_pubblicazione date not null,
 	primary key (episodio_id, podcast),
 	foreign key (podcast) references Podcast(podcast_id)
 );
@@ -97,15 +97,15 @@ CREATE TABLE Abbonamento (
 
 CREATE TABLE Playlist (
 	playlist_id char (10) primary key,
-	nome varchar (30),
+	nome varchar (30) not null,
 	descrizione varchar (250),
-	data_creazione date,
-	utente varchar (50),
+	data_creazione date not null,
+	utente varchar (50) not null,
 	FOREIGN KEY (utente) REFERENCES Utente(mail)
 );
 
 CREATE TABLE Contenuto_playlist (
-    playlist char (10),
+    playlist char (10) not null,
     titolo varchar (30),
     album int,
     FOREIGN key (playlist) REFERENCES Playlist(playlist_id),
@@ -115,8 +115,8 @@ CREATE TABLE Contenuto_playlist (
 CREATE TABLE piano (
     piano_id char(10),
     utente varchar(50) unique,
-    inizio_piano date,
-    fine_piano date,
+    inizio_piano date not null,
+    fine_piano date not null,
     check (EXTRACT (MONTH FROM fine_piano) - EXTRACT (MONTH FROM inizio_piano) >= 1 OR EXTRACT (YEAR FROM fine_piano) - EXTRACT (YEAR FROM inizio_piano) >= 1),
     abbonamento varchar (20),
     primary key (piano_id, utente),
@@ -2018,3 +2018,6 @@ INSERT INTO Pagamento (transazione_id, fatturazione_id, data_fattura, importo) V
     AND dati_fatturazione.fatturazione_id = pagamento.fatturazione_id
     GROUP BY utente.nickname
     ORDER BY num_pagamenti DESC
+
+-- indice : creare un indice per la tabella canzone
+    CREATE INDEX canzone_indice ON canzone (titolo, album);
