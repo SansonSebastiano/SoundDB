@@ -16,54 +16,54 @@ DROP TABLE IF EXISTS dati_fatturazione CASCADE;
 DROP TABLE IF EXISTS Pagamento CASCADE;
 
 CREATE TABLE Utente (
-	mail varchar (50) primary key,
-	nome varchar (50) not null,
-	cognome varchar (50) not null,
-	stato char (2),
-	password varchar (30) not null,
-	nickname varchar (20) not null unique,
-	followers int,
-	following int
+	mail VARCHAR (50) PRIMARY KEY,
+	nome VARCHAR (50) NOT NULL,
+	cognome VARCHAR (50) NOT NULL,
+	stato CHAR (2),
+	password VARCHAR (30) NOT NULL,
+	nickname VARCHAR (20) NOT NULL UNIQUE,
+	followers INT,
+	following INT
 );
 
 CREATE TABLE Artista (
-	mail varchar (50) primary key,
-	nome varchar (50) not null,
-	cognome varchar (50) not null,
-	stato char (2),
-	password varchar (30) not null,
-	followers int,
-	nome_artista varchar (30) not null unique,
-	info varchar (200),
-	label varchar (20),
-	ascolti_mensili int
+	mail VARCHAR (50) PRIMARY KEY,
+	nome VARCHAR (50) NOT NULL,
+	cognome VARCHAR (50) NOT NULL,
+	stato CHAR (2),
+	password VARCHAR (30) NOT NULL,
+	followers INT,
+	nome_artista VARCHAR (30) NOT NULL UNIQUE,
+	info VARCHAR (200),
+	label VARCHAR (20),
+	ascolti_mensili INT
 );
 
 CREATE TABLE Podcaster (
-	mail VARCHAR(50) primary key,
-	nome VARCHAR(50) not null,
-	cognome VARCHAR(50) not null,
+	mail VARCHAR(50) PRIMARY KEY,
+	nome VARCHAR(50) NOT NULL,
+	cognome VARCHAR(50) NOT NULL,
 	stato VARCHAR(50),
-	password VARCHAR(50) not null unique,
+	password VARCHAR(50) NOT NULL UNIQUE,
 	followers INT,
-	nome_podcaster VARCHAR(30) not null unique,
+	nome_podcaster VARCHAR(30) NOT NULL UNIQUE,
 	info VARCHAR(200)
 );
 
 CREATE TABLE Album (
-	album_id SERIAL primary key,
-	titolo varchar (30) not null,
-	artista varchar (50) not null,
-	data_pubblicazione date not null,
+	album_id SERIAL PRIMARY KEY,
+	titolo VARCHAR (30) NOT NULL,
+	artista VARCHAR (50) NOT NULL,
+	data_pubblicazione DATE NOT NULL,
 	FOREIGN KEY (artista) REFERENCES Artista(mail)
 );
 TRUNCATE ONLY Album
 RESTART IDENTITY;
 
 CREATE TABLE Podcast (
-    podcast_id SERIAL primary key,
-	nome_podcast VARCHAR(30) not null,
-	podcaster VARCHAR(50) not null,
+    podcast_id SERIAL PRIMARY KEY,
+	nome_podcast VARCHAR(30) NOT NULL,
+	podcaster VARCHAR(50) NOT NULL,
 	info VARCHAR(100),
 	FOREIGN KEY (podcaster) REFERENCES Podcaster(mail)
 );
@@ -71,101 +71,101 @@ TRUNCATE ONLY Podcast
 RESTART IDENTITY;
 
 CREATE TABLE Canzone (
-	titolo varchar (30),
-	album int,
-	durata int not null,
-	primary key (titolo, album),
+	titolo VARCHAR (30),
+	album INT,
+	durata INT NOT NULL,
+	PRIMARY KEY (titolo, album),
     FOREIGN KEY (album) REFERENCES Album(album_id)
 );
 
 CREATE TABLE Episodio (
-	podcast int,
-	titolo VARCHAR(50) not null,
+	podcast INT,
+	titolo VARCHAR(50) NOT NULL,
 	descrizione VARCHAR(300),
-	durata int not null,
-	data_pubblicazione date not null,
-	primary key (titolo, podcast),
-	foreign key (podcast) references Podcast(podcast_id)
+	durata INT NOT NULL,
+	data_pubblicazione DATE NOT NULL,
+	PRIMARY KEY (titolo, podcast),
+	FOREIGN KEY (podcast) references Podcast(podcast_id)
 );
 
 CREATE TABLE Abbonamento (
-    nome varchar(20) primary key check (nome in('FREE', 'PREMIUM', 'FAMILY')),
-    costo_mensile numeric (4, 2) check (costo_mensile >= 0),
-    descrizione varchar(200)
+    nome VARCHAR(20) PRIMARY KEY CHECK (nome IN('FREE', 'PREMIUM', 'FAMILY')),
+    costo_mensile NUMERIC (4, 2) CHECK (costo_mensile >= 0),
+    descrizione VARCHAR(200)
 );
 
 CREATE TABLE Playlist (
-	playlist_id char (10) primary key,
-	nome varchar (30) not null,
-	descrizione varchar (250),
-	data_creazione date not null,
-	utente varchar (50) not null,
+	playlist_id CHAR (10) PRIMARY KEY,
+	nome VARCHAR (30) NOT NULL,
+	descrizione VARCHAR (250),
+	data_creazione DATE NOT NULL,
+	utente VARCHAR (50) NOT NULL,
 	FOREIGN KEY (utente) REFERENCES Utente(mail)
 );
 
 CREATE TABLE Contenuto_playlist (
-    playlist char (10) not null,
-    titolo varchar (30),
-    album int,
-    FOREIGN key (playlist) REFERENCES Playlist(playlist_id),
-    FOREIGN key (titolo, album) REFERENCES Canzone(titolo, album)
+    playlist CHAR (10) NOT NULL,
+    titolo VARCHAR (30),
+    album INT,
+    FOREIGN KEY (playlist) REFERENCES Playlist(playlist_id),
+    FOREIGN KEY (titolo, album) REFERENCES Canzone(titolo, album)
 );
 
 CREATE TABLE piano (
-    utente varchar(50) primary key,
-    inizio_piano date not null,
-    fine_piano date not null,
-    check (EXTRACT (MONTH FROM fine_piano) - EXTRACT (MONTH FROM inizio_piano) >= 1 OR EXTRACT (YEAR FROM fine_piano) - EXTRACT (YEAR FROM inizio_piano) >= 1),
-    abbonamento varchar (20),
-    foreign key (utente) references utente(mail),
-    foreign key (abbonamento) references abbonamento(nome)
+    utente VARCHAR(50) PRIMARY KEY,
+    inizio_piano DATE NOT NULL,
+    fine_piano DATE NOT NULL,
+    CHECK (EXTRACT (MONTH FROM fine_piano) - EXTRACT (MONTH FROM inizio_piano) >= 1 OR EXTRACT (YEAR FROM fine_piano) - EXTRACT (YEAR FROM inizio_piano) >= 1),
+    abbonamento VARCHAR (20),
+    FOREIGN KEY (utente) references utente(mail),
+    FOREIGN KEY (abbonamento) references abbonamento(nome)
 );
 
 CREATE TABLE categoria (
-    nome varchar (30) primary key,
-    descrizione varchar(100)
+    nome VARCHAR (30) PRIMARY KEY,
+    descrizione VARCHAR(100)
 );
 
 CREATE TABLE Carta_di_credito (
-    numero numeric(16,0) primary key,
-    cvv numeric(3,0) not null,
-    intestatario varchar(50) not null,
-    scadenza date not null,
-    circuito varchar (20) not null
-    check (circuito in('mastercard', 'visa', 'maestro'))
+    numero NUMERIC(16,0) PRIMARY KEY,
+    cvv NUMERIC(3,0) NOT NULL,
+    intestatario VARCHAR(50) NOT NULL,
+    scadenza DATE NOT NULL,
+    circuito VARCHAR (20) NOT NULL
+    CHECK (circuito IN('mastercard', 'visa', 'maestro'))
 );
 
 CREATE TABLE podcast_categoria (
-    podcast int not null,
-    categoria varchar(30) not null,
+    podcast INT NOT NULL,
+    categoria VARCHAR(30) NOT NULL,
     FOREIGN KEY (podcast) REFERENCES podcast(podcast_id),
     FOREIGN KEY (categoria) REFERENCES categoria(nome)
 );
 
 CREATE TABLE dati_fatturazione (
-    fatturazione_id char(10) primary key,
-    codice_fiscale char(16) unique not null,
-    civico int not null,
-    via varchar(30) not null,
-    citta varchar(30) not null,
-    cap int check (cap between 10000 and 99999) not null,
-    stato char(2) not null,
-    utente varchar (50) not null,
-    carta_credito numeric(16,0) not null,
+    fatturazione_id CHAR(10) PRIMARY KEY,
+    codice_fiscale CHAR(16) UNIQUE NOT NULL,
+    civico INT NOT NULL,
+    via VARCHAR(30) NOT NULL,
+    citta VARCHAR(30) NOT NULL,
+    cap INT CHECK (cap between 10000 and 99999) NOT NULL,
+    stato CHAR(2) NOT NULL,
+    utente VARCHAR (50) NOT NULL,
+    carta_credito NUMERIC(16,0) NOT NULL,
     FOREIGN KEY (utente) REFERENCES utente(mail),
     FOREIGN KEY (carta_credito) REFERENCES carta_di_credito(numero)
 );
 
 CREATE TABLE Pagamento (
-    transazione_id char (10) primary key,
-    fatturazione_id char (10) not null,
-    data_fattura date not null,
-    importo numeric (4, 2) not null,
-    FOREIGN key (fatturazione_id) REFERENCES Dati_fatturazione(fatturazione_id),
-    check(importo >= 0)
+    transazione_id CHAR (10) PRIMARY KEY,
+    fatturazione_id CHAR (10) NOT NULL,
+    data_fattura DATE NOT NULL,
+    importo NUMERIC (4, 2) NOT NULL,
+    FOREIGN KEY (fatturazione_id) REFERENCES Dati_fatturazione(fatturazione_id),
+    CHECK(importo >= 0)
 );
 
-INSERT INTO Utente (mail, nome, cognome, stato, password, nickname, followers, following) values 
+INSERT INTO Utente (mail, nome, cognome, stato, password, nickname, followers, following) VALUES 
 	('msier0@fotki.com', 'Malinda', 'Sier', 'HK', '0PwstJO', 'msier0', 19, 684),
 	('aabbie1@goodreads.com', 'Aprilette', 'Abbie', 'CN', 'VSdEPik4d6T', 'aabbie1', 446, 72),
 	('dscholfield2@opera.com', 'Donal', 'Scholfield', 'PT', 'J0oX2Do', 'dscholfield2', 624, 531),
@@ -278,7 +278,7 @@ INSERT INTO Artista (mail, nome, cognome, stato, password, followers, nome_artis
 	('zbayldon6@mysql.com', 'Zelda', 'Bayldon', 'FI', '9MJbo8mF9EgD', 822908, 'Zbayldon', 'Expanded uniform flexibility', 857, 301085),
 	('cneubigin7@usa.gov', 'Chlo', 'Neubigin', 'JP', '4GG53nMKbG', 939107, 'Cneubigin', 'Profit-focused next generation emulation', 467, 586461),
 	('abelfitt9@nydailynews.com', 'Anthe', 'Belfitt', 'NG', 'ECARfg', 736234, 'Abelfitt', 'Horizontal radical definition', 411, 687565),
-	('bmilborna@ucsd.edu', 'Barnebas', 'Milborn', 'PT', 'OLKfEh62rn', 362538, 'Bmilborna', 'Public-key fresh-thinking utilisation', 864, 997663),
+	('bmilborna@ucsd.edu', 'Barnebas', 'Milborn', 'PT', 'OLKfEh62rn', 362538, 'Bmilborna', 'Public-KEY fresh-thinking utilisation', 864, 997663),
 	('rkirkmanb@mozilla.com', 'Ruth', 'Kirkman', 'CN', 'MfPnhQJIFj', 810351, 'Bkirkmanb', 'Switchable heuristic function', 366, 447368),
 	('kballintynec@tinyurl.com', 'Ketti', 'Ballintyne', 'CZ', '2DUL9cQV', 45265, 'Ballintynec', 'Future-proofed stable functionalities', 705, 964243),
 	('fautied@bandcamp.com', 'Farah', 'Autie', 'PL', 'APKr5yaB99Ih', 660431, 'Fautied', 'Multi-channelled cohesive strategy', 542, 632179),
@@ -314,7 +314,7 @@ INSERT INTO Artista (mail, nome, cognome, stato, password, followers, nome_artis
 	('cclubbe17@de.vu', 'Cherry', 'Clubbe', 'SY', '1Js6hBh0LU0z', 229466, 'Clubbe', 'Team-oriented zero tolerance alliance', 946, 876787),
 	('jcutbush18@java.com', 'June', 'Cutbush', 'TN', 'ekoM2TCPSy', 178691, 'Cutbush', 'Robust 24 hour encryption', 471, 283367),
 	('kposner19@elpais.com', 'Kimmi', 'Posner', 'TN', 'JFKApvRX63M', 320474, 'Posne', 'Integrated executive complexity', 934, 255745),
-	('ehaslewood1a@springer.com', 'Eldredge', 'Haslewood', 'KM', 'ovGlqCV', 697864, 'Ehaslewooda', 'Public-key static contingency', 655, 14008),
+	('ehaslewood1a@springer.com', 'Eldredge', 'Haslewood', 'KM', 'ovGlqCV', 697864, 'Ehaslewooda', 'Public-KEY static contingency', 655, 14008),
 	('nwace1b@yellowbook.com', 'Nike', 'Wace', 'UY', 'VkV4oTGInsv', 617529, 'Webex', 'Synchronised neutral protocol', 512, 694446),
 	('rhinckesman1c@360.cn', 'Renaud', 'Hinckesman', 'CN', 'FvSTDTLdCa', 400151, 'Rhinckesmanc', 'Persevering non-volatile function', 319, 347452),
 	('pbungey1d@arizona.edu', 'Pail', 'Bungey', 'CN', 'DZbPes2', 716517, 'Bungeyd', 'Customizable scalable attitude', 227, 980058);
@@ -473,7 +473,7 @@ INSERT INTO Album (titolo, artista, data_pubblicazione) VALUES
 	('ut tellus', 'amiddis11@google.com', '2022/02/01'),
 	('amet diam in', 'odonnett2@microsoft.com', '2020/08/30');
 
-INSERT INTO Podcast (nome_podcast, podcaster, info) values 
+INSERT INTO Podcast (nome_podcast, podcaster, info) VALUES 
     ('id justo sit', 'cyate3@uol.com.br', 'Right-sized discrete project'),
     ('tellus', 'cyate3@uol.com.br', 'Optimized content-based success'),
     ('phasellus', 'mroelofs5@acquirethisname.com', 'Horizontal mobile hierarchy'),
@@ -1076,7 +1076,7 @@ INSERT INTO Canzone (titolo, album, durata) VALUES
     ('ut tellus', 99, 504),
     ('amet diam in', 100, 351);
 
-INSERT INTO Episodio (podcast, titolo, descrizione, durata, data_pubblicazione) values 
+INSERT INTO Episodio (podcast, titolo, descrizione, durata, data_pubblicazione) VALUES 
     (71, 'dapibus augue', 'odio curabitur convallis duis consequat dui nec nisi volutpat eleifend donec ut dolor morbi vel', 1352, '2022-05-07'),
     (53, 'vulputate', 'a ipsum integer a nibh in quis justo maecenas rhoncus aliquam', 4445, '2021-10-02'),
     (65, 'lacus at turpis', 'varius ut blandit non interdum in ante vestibulum ante ipsum primis', 2277, '2022-01-29'),
@@ -1578,7 +1578,7 @@ INSERT INTO Episodio (podcast, titolo, descrizione, durata, data_pubblicazione) 
     (99, 'pretium', 'penatibus et magnis dis parturient montes nascetur ridiculus mus etiam vel augue vestibulum rutrum rutrum neque aenean auctor', 807, '2022-05-09'),
     (25, 'amet nunc viverra', 'semper rutrum nulla nunc purus phasellus in felis donec semper sapien a libero nam', 6437, '2021-11-27');
 
-INSERT INTO Abbonamento (nome, costo_mensile, descrizione) values 
+INSERT INTO Abbonamento (nome, costo_mensile, descrizione) VALUES 
         ('FREE', 00.00, 'Abbonamento gratuito che permette unicamente la riproduzione di brani e podcast con interruzioni pubblicitarie'),
         ('PREMIUM', 09.99, 'Abbonamento consente la riproduzione di contenuti senza alcuna interruzione pubblicitaria e a possibilità di creare playlist personalizzate');
 
@@ -1668,7 +1668,7 @@ INSERT INTO Contenuto_playlist(playlist, titolo, album) VALUES
     ('ffjvxGTJea', 'justo pellentesque', 90),
     ('TLDA9noEnV', 'facilisi', 91);
 
-INSERT INTO piano (utente, inizio_piano, fine_piano, abbonamento) values 
+INSERT INTO piano (utente, inizio_piano, fine_piano, abbonamento) VALUES 
     ('msier0@fotki.com', '2021-07-17', '2022-03-23', 'PREMIUM'),
     ('aabbie1@goodreads.com', '2022-01-01', '2022-03-11', 'FREE'),
     ('dscholfield2@opera.com', '2022-02-10', '2022-04-02', 'FREE'),
@@ -1769,7 +1769,7 @@ INSERT INTO piano (utente, inizio_piano, fine_piano, abbonamento) values
     ('cpickersgill2n@oaic.gov.au', '2022-05-26', '2022-07-15', 'FREE'),
     ('dcolclough2r@issuu.com', '2021-09-28', '2021-11-29', 'FREE');
 
-INSERT INTO categoria values
+INSERT INTO categoria VALUES
     ('Drama', 'Cross-platform web-enabled projection'),
     ('Comedy', 'Vision-oriented homogeneous open system'),
     ('Sci-Fi', 'Grass-roots multi-state access'),
@@ -1824,7 +1824,7 @@ INSERT INTO Carta_di_credito (numero, cvv, intestatario, scadenza, circuito) VAL
     ('5100135732036217', 192, 'Mariam Edelheid', '2020/08/15', 'visa'),
     ('5010128561856002', 51, 'Fernande Staning', '2022/06/21', 'mastercard');
 
-insert into podcast_categoria (podcast, categoria) values 
+insert INTO podcast_categoria (podcast, categoria) VALUES 
     (1, 'Crime'),
     (2, 'Drama'),
     (3, 'Horror'),
@@ -1926,7 +1926,7 @@ insert into podcast_categoria (podcast, categoria) values
     (99, 'Drama'),
     (100, 'Horror');
 
-insert into dati_fatturazione (fatturazione_id, codice_fiscale, civico, via, citta, cap, stato, utente, carta_credito) values 
+insert INTO dati_fatturazione (fatturazione_id, codice_fiscale, civico, via, citta, cap, stato, utente, carta_credito) VALUES 
     ('cfRIo0cBv5', 'AZSEBM36S06P361W', 93, 'Moulton Park', 'Al Mazra‘ah ash Sharqīyah', 66508, 'PS', 'msier0@fotki.com', '5002359495379072'),
     ('272OiurEd3', 'CCORCJ85U44A886W', 396, 'Village Green Road', 'Níkaia', 72756, 'GR', 'aabbie1@goodreads.com', '5100139987452905'),
     ('oszsXBdzGu', 'KOQOMI65T91A507A', 681, 'Sheridan Center', 'Oklahoma City', 36369, 'US', 'dscholfield2@opera.com', '5100143970462871'),
